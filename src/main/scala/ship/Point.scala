@@ -1,9 +1,16 @@
 package ship
 
-class Point(x : Int, y : Int) {
+case class Point(val x : Int, val y : Int) {
 
-  var x : Int = x
-  var y : Int = y
 
+
+  /**
+    *
+    * @return
+    */
+  def isGood: Boolean = {
+    if((x>0) && (x<=10) && (y>0) && (y<=10)) true
+    else false
+  }
 
 }
