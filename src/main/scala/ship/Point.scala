@@ -1,6 +1,23 @@
 package ship
 
-case class Point(val x : Int, val y : Int)
+case class Point(x : Int, y : Int) {
+
+  /**
+    *
+    * @return the x coordinate of the point
+    */
+  def getX: Int = {
+    x
+  }
+
+  /**
+    *
+    * @return the y coordinate of the point
+    */
+  def getY: Int = {
+    y
+  }
+}
 
 object Point {
 

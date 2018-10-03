@@ -1,5 +1,7 @@
 package ship
 
+import scala.annotation.tailrec
+
 case class Ship(private val pos: List[Point], private val hits: List[Point], private val typeS: TypeShip) {
 
   /**
@@ -7,7 +9,7 @@ case class Ship(private val pos: List[Point], private val hits: List[Point], pri
     * @return the ship's list of positions
     */
   def getPos: List[Point] = {
-    return pos
+    pos
   }
 
   /**
@@ -15,14 +17,14 @@ case class Ship(private val pos: List[Point], private val hits: List[Point], pri
     * @return the ship's list of positions that were hit
     */
   def getHits: List[Point] = {
-    return hits
+    hits
   }
 
   /**
     *
-    * @return true if the ship is sink
+    * @return true if the ship is sunk
     */
-  def isFinished: Boolean = {
+  def isSunk: Boolean = {
     pos.length == hits.length
   }
 
@@ -43,11 +45,28 @@ object Ship {
 
   /**
     *
+    * @param dir the direction
+    * @param x the x coordinate
+    * @param y the y coordinate
+    * @param len the length of the ship
+    * @return true if we can place a ship on the grid according to these parameters
+    */
+  def canPlace(dir: String, x: Int, y: Int, len: Int) : Boolean = {
+    Point.isGood(x, y) && (dir match {
+      case "horizontal" => Point.isGood(x = x + len - 1, y)
+      case "vertical" => Point.isGood(x, y = y + len -1)
+      case _ => false
+    })
+
+  }
+
+  /**
+    *
     * @param dir the direction of the ship
     * @param x the x coordinate of the ship
     * @param y the y coordinate of the ship
     * @param len the length of the ship
-    * @return a list of positions according to the parameters
+    * @return a list of positions according to these parameters
     */
   def createList(dir: String, x: Int, y: Int, len: Int) : List[Point] = {
     if(len>0) {

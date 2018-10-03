@@ -1,6 +1,6 @@
 package ship
 
-import ship.Player.isOccupied
+import scala.annotation.tailrec
 
 case class Player(name: String, ships: List[Ship], placedHits: List[Point]) {
 
@@ -9,7 +9,7 @@ case class Player(name: String, ships: List[Ship], placedHits: List[Point]) {
     * @return all the ships of the player
     */
   def getShips: List[Ship] = {
-    return ships
+    ships
   }
 
   /**
@@ -17,7 +17,7 @@ case class Player(name: String, ships: List[Ship], placedHits: List[Point]) {
     * @return all the hits the payer placed
     */
   def getPlacedHits: List[Point] = {
-    return placedHits
+    placedHits
   }
 
   /**
@@ -32,7 +32,7 @@ case class Player(name: String, ships: List[Ship], placedHits: List[Point]) {
     var  points = ship.getPos
     if(ships.isEmpty) this.copy(ships = ship::Nil)
     // if the ship's positions are not occupied, we can add the ship
-    else if (areNotOccupied(shipsPosition, points)){
+    else if (Player.areNotOccupied(shipsPosition, points)){
       this.copy(ships = ships:+ship)
     }
     else {
@@ -40,18 +40,6 @@ case class Player(name: String, ships: List[Ship], placedHits: List[Point]) {
     }
   }
 
-
-  /**
-    *
-    * @param listPosShip the ship's list of positions
-    * @param listPos a list of positions
-    * @return true if none of the ship's positions are occupied, false otherwise
-    */
-  def areNotOccupied(listPosShip: List[Point], listPos: List[Point]): Boolean = {
-    if(listPos.isEmpty) true //on peut la placer
-    else if (isOccupied(listPosShip, listPos.head)) false
-    else areNotOccupied(listPosShip, listPos.tail)
-  }
 }
 
 object Player {
@@ -71,13 +59,26 @@ object Player {
   /**
     *
     * @param ships the player's list of ships
-    * @return true if all the ships are sink
+    * @return true if all the ships are sunk
     */
+  @tailrec
   def isFinished(ships: List[Ship]): Boolean = {
     if(ships.isEmpty) false
-    else if(ships.head.isFinished ) true
-    else (isFinished(ships.tail))
-    ships.forall(x => x.isFinished)
+    else if(ships.head.isSunk ) true
+    else isFinished(ships.tail)
+  }
+
+  /**
+    *
+    * @param listPosShip the ship's list of positions
+    * @param listPos a list of positions
+    * @return true if none of the ship's positions are occupied, false otherwise
+    */
+  @tailrec
+  def areNotOccupied(listPosShip: List[Point], listPos: List[Point]): Boolean = {
+    if(listPos.isEmpty) true
+    else if (isOccupied(listPosShip, listPos.head)) false
+    else areNotOccupied(listPosShip, listPos.tail)
   }
 
   /**
@@ -86,10 +87,12 @@ object Player {
     * @param pos the position we want to hit
     * @return true if the position correspond to a ship's position, false otherwise
     */
+  @tailrec
   def oneIsHit(ships: List[Ship], pos: Point): Boolean = {
     if(ships.isEmpty) false
     else if(Ship.isHit(ships.head, pos)) true
     else oneIsHit(ships.tail, pos)
   }
+
 
 }

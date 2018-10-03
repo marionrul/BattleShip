@@ -12,7 +12,7 @@ println("x ?")
   val len = 2
   println("direction ?")
   val dir = scala.io.StdIn.readLine()
-  if(Point.isGood(x.toInt, y.toInt)) {
+  if(Ship.canPlace(dir, x.toInt, y.toInt, len)) {
 val typeS: TypeShip = Ship.destroyer
     val liste = Ship.createList(dir, x.toInt, y.toInt, len)
     println("LISTE DE POINTS", liste)
@@ -21,6 +21,10 @@ val typeS: TypeShip = Ship.destroyer
     println("OKKKK", player1.ships)
 
   }
+  else {
+    println("ERRRREUR le bateau sera en dehors de la grille")
+  }
+
 
 
   println("x tir?")
