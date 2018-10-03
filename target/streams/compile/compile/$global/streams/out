@@ -1,0 +1,3 @@
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Marion\IdeaProjects\BattleShip\src\main\scala\ship\Main.scala:32:24: ';' expected but '=' found.[0m
+[0m[[0m[31merror[0m] [0m[0m    (player2, player1) = Game.hit(player2, player1, p)[0m
+[0m[[0m[31merror[0m] [0m[0m                       ^[0m

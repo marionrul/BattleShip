@@ -4,11 +4,29 @@ case class Ship(private val pos: List[Point], private val hits: List[Point], pri
 
   /**
     *
-    * @return
+    * @return the ship's list of positions
     */
   def getPos: List[Point] = {
     return pos
   }
+
+  /**
+    *
+    * @return the ship's list of positions that were hit
+    */
+  def getHits: List[Point] = {
+    return hits
+  }
+
+  /**
+    *
+    * @return true if the ship is sink
+    */
+  def isFinished: Boolean = {
+    pos.length == hits.length
+  }
+
+
 }
 
 case class TypeShip(name: String, len: Int)
@@ -25,11 +43,11 @@ object Ship {
 
   /**
     *
-    * @param dir
-    * @param x
-    * @param y
-    * @param len
-    * @return
+    * @param dir the direction of the ship
+    * @param x the x coordinate of the ship
+    * @param y the y coordinate of the ship
+    * @param len the length of the ship
+    * @return a list of positions according to the parameters
     */
   def createList(dir: String, x: Int, y: Int, len: Int) : List[Point] = {
     if(len>0) {
@@ -43,21 +61,31 @@ object Ship {
     }
   }
 
-
   /**
     *
-    * @return
+    * @param ship a ship
+    * @param position the position the player wants to hit
+    * @return true if the ship is hit
     */
-  def isFinished: Boolean = {
-    pos.forall(hits.contains)
+  def isHit(ship: Ship, position: Point): Boolean = {
+    ship.getPos.contains(position)
   }
 
   /**
     *
-    * @param position
-    * @return
+    * @param ship a ship
+    * @param pos the position the player wants to hit
+    * @return if the ship is hit, a copy of the shit with the new list of positions hit
     */
-  def isHit(position: Point): Boolean = {
-    pos.contains(position)
+  def hitShip(ship: Ship, pos:Point): Ship = {
+    if(isHit(ship, pos)) {
+     ship.copy(hits = ship.getHits:+pos)
+    }
+    else ship.copy(hits = ship.getHits)
   }
+
+
+
+
+
 }

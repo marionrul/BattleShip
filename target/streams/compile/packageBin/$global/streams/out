@@ -1,0 +1,31 @@
+[0m[[0m[0minfo[0m] [0m[0mPackaging C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\battleship_2.12-0.1.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Point$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Point$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Main$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Main$delayedInit$body.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Game.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Game.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Main$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Main$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Ship.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Ship.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Point.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Point.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\TypeShip$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\TypeShip$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Player.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Player.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Ship$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Ship$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\TypeShip.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\TypeShip.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Game$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Game$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Player$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Player$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship[0m
+[0m[[0m[0minfo[0m] [0m[0mDone packaging.[0m
