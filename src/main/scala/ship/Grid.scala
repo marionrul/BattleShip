@@ -1,0 +1,5 @@
+package ship
+
+class Grid {
+
+}

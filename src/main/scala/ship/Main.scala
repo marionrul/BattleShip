@@ -5,7 +5,7 @@ object Main extends App {
   var player1:Player = Player("Marion", Nil, Nil)
   var player2 = Player("H", Nil, Nil)
 
-println("x ?")
+/*println("x ?")
   val x = scala.io.StdIn.readLine()
   println("y ?")
   val y = scala.io.StdIn.readLine()
@@ -23,7 +23,8 @@ val typeS: TypeShip = Ship.destroyer
   }
   else {
     println("ERRRREUR le bateau sera en dehors de la grille")
-  }
+  }*/
+  Player.createFleet(Ship.typeShipList, player1)
 
 
 

@@ -13,7 +13,7 @@ object Game {
   def goodHit(player1: Player, player2: Player, pos: Point) : Boolean ={
     if(player1.getPlacedHits.contains(pos)) false
     else if(Player.oneIsHit(player2.getShips, pos)) {
-      return true
+      true
     }
     else false
   }

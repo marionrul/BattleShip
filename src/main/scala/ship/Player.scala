@@ -46,6 +46,40 @@ object Player {
 
   /**
     *
+    * @param dir the direction
+    * @param x the x coordinate
+    * @param y the y coordinate
+    * @param typeShips the list of ships the player has to place
+    * @param player the player that creates his fleet
+    * @return a new player with his new fleet
+    */
+  @tailrec
+  def createFleet(typeShips: List[TypeShip], player: Player):  Player = {
+
+    if(typeShips.isEmpty) {
+      player
+    }
+    else {
+      val firstTypeShip: TypeShip = typeShips.head
+      println("The ship to place is" + " " + firstTypeShip.getName + " " + "with the length" + " " + firstTypeShip.getLen)
+      println("Please enter its parameters")
+      val x = Helper.EntryParameters("x")
+      val y = Helper.EntryParameters("y")
+      val dir = Helper.EntryDirection()
+      println("Premier bateau ", firstTypeShip)
+      val liste = Ship.createList(dir, x, y, firstTypeShip)
+      println("LISTE DE POINTS", liste)
+      val ship = Ship(liste, Nil, firstTypeShip)
+      println("Le bateau", ship)
+      val newPlayer = player.placeShip(ship)
+      val secondTypeShip = typeShips.tail
+      createFleet(secondTypeShip, newPlayer)
+    }
+
+  }
+
+  /**
+    *
     * @param positions a list of positions
     * @param pos a position we want to add
     * @return true if the position is already occupied, false otherwise

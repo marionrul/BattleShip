@@ -2,6 +2,8 @@
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	ship\Point$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Point$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Helper$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Helper$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	ship\Main$delayedInit$body.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Main$delayedInit$body.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	ship\Game.class[0m
@@ -12,6 +14,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Ship.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	ship\Main.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Main.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ship\Helper.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Helper.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	ship\Point.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Marion\IdeaProjects\BattleShip\target\scala-2.12\classes\ship\Point.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	ship\TypeShip$.class[0m

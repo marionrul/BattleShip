@@ -31,7 +31,26 @@ case class Ship(private val pos: List[Point], private val hits: List[Point], pri
 
 }
 
-case class TypeShip(name: String, len: Int)
+case class TypeShip(name: String, len: Int) {
+
+  /**
+    *
+    * @return the len of the ship
+    */
+  def getLen: Int = {
+    len
+  }
+
+  /**
+    *
+    * @return the name of the ship
+    */
+  def getName: String = {
+    name
+  }
+
+
+}
 
 object Ship {
 
@@ -43,6 +62,8 @@ object Ship {
   val cruiser: TypeShip = TypeShip("Cruiser", 3)
   val destroyer: TypeShip = TypeShip("Destroyer", 2)
 
+  val typeShipList: List[TypeShip] = List(Ship.carrier, Ship.battleship, Ship.submarine, Ship.cruiser, Ship.destroyer)
+
   /**
     *
     * @param dir the direction
@@ -52,11 +73,16 @@ object Ship {
     * @return true if we can place a ship on the grid according to these parameters
     */
   def canPlace(dir: String, x: Int, y: Int, len: Int) : Boolean = {
-    Point.isGood(x, y) && (dir match {
-      case "horizontal" => Point.isGood(x = x + len - 1, y)
-      case "vertical" => Point.isGood(x, y = y + len -1)
-      case _ => false
-    })
+    if(len == 0) {
+      true
+    }
+    else {
+      Point.isGood(x, y) && (dir match {
+        case "horizontal" => Point.isGood(x = x + len - 1, y)
+        case "vertical" => Point.isGood(x, y = y + len - 1)
+        case _ => false
+      })
+    }
 
   }
 
@@ -65,14 +91,15 @@ object Ship {
     * @param dir the direction of the ship
     * @param x the x coordinate of the ship
     * @param y the y coordinate of the ship
-    * @param len the length of the ship
+    * @param typeS the type of the ship
     * @return a list of positions according to these parameters
     */
-  def createList(dir: String, x: Int, y: Int, len: Int) : List[Point] = {
-    if(len>0) {
+  def createList(dir: String, x: Int, y: Int, typeS: TypeShip) : List[Point] = {
+    if(canPlace(dir, x, y, typeS.getLen) && typeS.getLen > 0) {
+      val newTypeShip = typeS.copy(len = typeS.len-1)
       dir match {
-        case Ship.horizontal => new Point(x,y) :: createList(dir, x+1, y, len-1)
-        case Ship.vertical => new Point(x,y) :: createList(dir, x, y+1, len-1)
+        case Ship.horizontal => new Point(x,y) :: createList(dir, x+1, y, newTypeShip)
+        case Ship.vertical => new Point(x,y) :: createList(dir, x, y+1, newTypeShip)
       }
     }
     else {
