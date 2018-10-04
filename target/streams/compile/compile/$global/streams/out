@@ -1,4 +1,5 @@
-[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Marion\IdeaProjects\BattleShip\src\main\scala\ship\Grid.scala:34:7: a pure expression does nothing in statement position[0m
-[0m[[0m[33mwarn[0m] [0m[0m      cell[0m
-[0m[[0m[33mwarn[0m] [0m[0m      ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0mC:\Users\Marion\IdeaProjects\BattleShip\src\main\scala\ship\Main.scala:29:19: not enough arguments for method displayGrid: (listGrid: List[List[String]], x: Int, y: Int, player: ship.Player)Unit.[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter player.[0m
+[0m[[0m[31merror[0m] [0m[0m  Grid.displayGrid(grille.getCells, 1, 1)[0m
+[0m[[0m[31merror[0m] [0m[0m                  ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

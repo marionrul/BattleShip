@@ -5,27 +5,15 @@ object Main extends App {
   var player1:Player = Player("Marion", Nil, Nil)
   var player2 = Player("H", Nil, Nil)
 
-/*println("x ?")
-  val x = scala.io.StdIn.readLine()
-  println("y ?")
-  val y = scala.io.StdIn.readLine()
-  val len = 2
-  println("direction ?")
-  val dir = scala.io.StdIn.readLine()
-  if(Ship.canPlace(dir, x.toInt, y.toInt, len)) {
-val typeS: TypeShip = Ship.destroyer
-    val liste = Ship.createList(dir, x.toInt, y.toInt, len)
-    println("LISTE DE POINTS", liste)
-    val destroyer = Ship(liste, Nil, typeS)
-    player1= player1.placeShip(destroyer)
-    println("OKKKK", player1.ships)
+  println("The battleship is about to start")
+  val grille : Grid = Grid.createRowGrid(1)
+  println(player1.getName + " your turn")
+  player1 = Player.createFleet(Ship.typeShipList, player1)
+  Grid.displayGrid(grille.getCells, 1, 1, player1)
 
-  }
-  else {
-    println("ERRRREUR le bateau sera en dehors de la grille")
-  }*/
- val grille : Grid = Grid.createRowGrid(1)
-  Grid.displayGrid(grille.getCells, 1, 1)
+  println(player2.getName + " your turn")
+  player2 = Player.createFleet(Ship.typeShipList, player2)
+  Grid.displayGrid(grille.getCells, 1, 1, player2)
 
 
 

@@ -22,6 +22,14 @@ case class Player(name: String, ships: List[Ship], placedHits: List[Point]) {
 
   /**
     *
+    * @return the name of the player
+    */
+  def getName: String = {
+    name
+  }
+
+  /**
+    *
     * @param ship the ship the player wants to place
     * @return a copy of the player with the new list of ships
     */
@@ -63,11 +71,8 @@ object Player {
       val x = Helper.EntryParameters("x")
       val y = Helper.EntryParameters("y")
       val dir = Helper.EntryDirection()
-      println("Premier bateau ", firstTypeShip)
       val liste = Ship.createList(dir, x, y, firstTypeShip)
-      println("LISTE DE POINTS", liste)
       val ship = Ship(liste, Nil, firstTypeShip)
-      println("Le bateau", ship)
       val newPlayer = player.placeShip(ship)
       val secondTypeShip = typeShips.tail
       createFleet(secondTypeShip, newPlayer)

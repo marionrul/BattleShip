@@ -28,22 +28,50 @@ case class Grid(cells: List[List[String]]) {
     }
   }
 
-    def displayGrid(listGrid: List[List[String]], x: Int, y: Int): Unit = {
+    def displayGrid(listGrid: List[List[String]], x: Int, y: Int, player: Player): Unit = {
+      //val player : Option[Point] = player.placedHits.find(player => player.x == x && player.y == y)
+      //if(player.isDefined) {
+     //if(player.placedHits.dropWhile(point => point.x == x && point.y == y).nonEmpty )
+     val point: Option[Option[Point]] = player.ships.map(ship => ship.getPos.find(point => point.x == x && point.y == y)).find(point => point.isDefined)
     if(x == 10 && y==10) {
-      val cell = "O"
-      println(cell)
+      if(point.isDefined) {
+        val cell = "X"
+        println(Console.RED + cell + Console.WHITE)
+      }
+      else {
+        //mettre une fonction
+        val cell = "O"
+        println(cell)
+      }
     }
-    else if(y==10) {
-      val cell = "O"
-      println(cell)
-      displayGrid(listGrid, x+1, 1)
+    else if(x<10) {
+      if(point.isDefined) {
+        val cell = "X"
+        print(Console.RED + cell)
+        displayGrid(listGrid, x + 1, y, player)
+      }
+      else {
+        //mettre une fonction
+        val cell = "O"
+        print(cell)
+        displayGrid(listGrid, x + 1, y, player)
+      }
     }
     else {
-      val cell = "O"
-      print(cell)
-      displayGrid(listGrid, x, y+1)
+      if(point.isDefined) {
+        val cell = "X"
+        println(Console.RED + cell)
+        displayGrid(listGrid, 1, y+1, player)
+      }
+      else {
+        //mettre une fonction
+        val cell = "O"
+        println(cell)
+        displayGrid(listGrid, 1, y + 1, player)
+      }
     }
     }
+      //
 
   /**
     * creates all the columns of the grid
