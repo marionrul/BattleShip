@@ -1,22 +1,15 @@
 package ship
 
-class Grid(cells: List[List[Point]], cellsOccupied: List[Point]) {
+case class Grid(cells: List[List[String]]) {
 
   /**
     *
     * @return the cells of the grid
-    */
-  def getCells:List[List[Point]] = {
+  */
+  def getCells:List[List[String]] = {
     cells
   }
 
-  /**
-    *
-    * @return the cells occupied of the grid
-    */
-  def getCellsOccupied: List[Point] = {
-    cellsOccupied
-  }
 }
 
   object Grid {
@@ -26,12 +19,31 @@ class Grid(cells: List[List[Point]], cellsOccupied: List[Point]) {
     * @param row the row of the grid
     * @return the grid of the battleship
     */
-  def createRowGrid(row: Int): List[List[Point]] = {
+  def createRowGrid(row: Int): Grid = {
     if(row<=10) {
-      createColumnsGrid(row, 0) :: createRowGrid(row + 1)
+      Grid(createColumnsGrid(row, 0) :: createRowGrid(row + 1).getCells)
     }
-    Nil
+    else {
+      Grid(Nil)
+    }
   }
+
+    def displayGrid(listGrid: List[List[String]], x: Int, y: Int): Unit = {
+    if(x == 10 && y==10) {
+      val cell = "O"
+      println(cell)
+    }
+    else if(y==10) {
+      val cell = "O"
+      println(cell)
+      displayGrid(listGrid, x+1, 1)
+    }
+    else {
+      val cell = "O"
+      print(cell)
+      displayGrid(listGrid, x, y+1)
+    }
+    }
 
   /**
     * creates all the columns of the grid
@@ -39,13 +51,13 @@ class Grid(cells: List[List[Point]], cellsOccupied: List[Point]) {
     * @param col the column of the grid
     * @return a list of cells that represents a row of the grid
     */
-  def createColumnsGrid(row: Int, col: Int): List[Point] = {
+  def createColumnsGrid(row: Int, col: Int): List[String] = {
     if(col <= 10) {
-      val cell = Point(col, row)
+      val cell = "O"
       cell :: createColumnsGrid(row, col+1)
     }
     else {
-      Nil
+    Nil
     }
   }
 

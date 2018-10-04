@@ -24,7 +24,8 @@ val typeS: TypeShip = Ship.destroyer
   else {
     println("ERRRREUR le bateau sera en dehors de la grille")
   }*/
-  Player.createFleet(Ship.typeShipList, player1)
+ val grille : Grid = Grid.createRowGrid(1)
+  Grid.displayGrid(grille.getCells, 1, 1)
 
 
 
