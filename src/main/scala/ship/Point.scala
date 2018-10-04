@@ -17,6 +17,7 @@ case class Point(x : Int, y : Int) {
   def getY: Int = {
     y
   }
+
 }
 
 object Point {

@@ -46,9 +46,6 @@ object Player {
 
   /**
     *
-    * @param dir the direction
-    * @param x the x coordinate
-    * @param y the y coordinate
     * @param typeShips the list of ships the player has to place
     * @param player the player that creates his fleet
     * @return a new player with his new fleet
