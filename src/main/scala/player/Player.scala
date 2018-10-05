@@ -1,4 +1,7 @@
-package ship
+package player
+
+import game.Helper
+import ship._
 
 import scala.annotation.tailrec
 

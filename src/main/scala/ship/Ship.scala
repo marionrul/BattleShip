@@ -91,14 +91,10 @@ object Ship {
     * @return true if the ship is hit
     */
   def isHit(ship: Ship, position: Point): Boolean = {
-    if(ship.getPos.contains(position)) {
-      println("The ship " + ship.getType.getName + " is hit")
-      true
-    }
-    else false
+    ship.getPos.contains(position)
   }
 
-  /**
+  /*
     *
     * @return true if the ship is sunk
     */

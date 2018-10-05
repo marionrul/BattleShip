@@ -1,4 +1,7 @@
-package ship
+package game
+
+import player.Player
+import ship.Point
 
 class Game(player1 : Player, player2: Player) {
 

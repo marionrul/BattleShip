@@ -1,6 +1,7 @@
-package ship
+package game
 
-import io.AnsiColor._
+import player.Player
+import ship.Point
 
 case class Grid()
 
