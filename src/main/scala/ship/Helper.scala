@@ -5,7 +5,7 @@ import scala.annotation.tailrec
 object Helper {
 
   /**
-    *
+    * Gets the player input
     * @param t the name of the entry
     * @return one of the coordinate entered by the player
     */
@@ -22,7 +22,7 @@ object Helper {
   }
 
   /**
-    *
+    * Gets the player input
     * @return the direction entered by the player
     */
   @tailrec

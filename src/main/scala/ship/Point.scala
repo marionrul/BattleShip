@@ -24,6 +24,8 @@ object Point {
 
   /**
     *
+    * @param x the x coordinate
+    * @param y the y coordinate
     * @return true if the coordinates x and y are in the grid, false otherwise
     */
   def isGood(x: Int, y: Int): Boolean = {

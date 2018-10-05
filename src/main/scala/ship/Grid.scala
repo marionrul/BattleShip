@@ -51,14 +51,11 @@ case class Grid(cells: List[List[String]]) {
     /**
       * displays the grid 1 of the player, with all his ships and the positions hit by the other player
       *
-      * @param x      the first x coordinate
-      * @param y      the first y coordinate
+      * @param x the first x coordinate
+      * @param y the first y coordinate
       * @param player the player
       */
     def displayGrid1(x: Int, y: Int, player: Player): Unit = {
-      //val player : Option[Point] = player.placedHits.find(player => player.x == x && player.y == y)
-      //if(player.isDefined) {
-      //if(player.placedHits.dropWhile(point => point.x == x && point.y == y).nonEmpty )
       if (x == 10 && y == 10) {
         val cell = existsBoats(x, y, player)
         println(cell)
@@ -78,8 +75,8 @@ case class Grid(cells: List[List[String]]) {
     /**
       * checks if there is a ship or a ship hit on the coordinates
       *
-      * @param x      the x coordinate
-      * @param y      the y coordinate
+      * @param x the x coordinate
+      * @param y the y coordinate
       * @param player the player
       * @return S if there is a ship on the coordinates, X if there is a hit ship on the coordinates, O otherwise
       */
@@ -87,12 +84,14 @@ case class Grid(cells: List[List[String]]) {
       val ship: Option[Option[Point]] = player.ships.map(ship => ship.getPos.find(point => point.x == x && point.y == y)).find(point => point.isDefined)
       val shipHit: Option[Option[Point]] = player.ships.map(ship => ship.getHits.find(point => point.x == x && point.y == y)).find(point => point.isDefined)
       if (ship.isDefined) {
-        val cell = Console.GREEN + "S" + Console.RESET
-        cell
-      }
-      else if (shipHit.isDefined) {
-        val cell = Console.RED + "X" + Console.RESET
-        cell
+        if (shipHit.isDefined) {
+          val cell = Console.RED + "X" + Console.RESET
+          cell
+        }
+        else {
+          val cell = Console.GREEN + "S" + Console.RESET
+          cell
+        }
       }
       else {
         val cell = "O"
@@ -105,39 +104,48 @@ case class Grid(cells: List[List[String]]) {
       *
       * @param x the first x coordinate
       * @param y the first y coordinate
-      * @param player the player
+      * @param player the player that sees the grid
+      * @param player2 the other player
       */
-    def displayGrid2(x: Int, y: Int, player: Player): Unit = {
+    def displayGrid2(x: Int, y: Int, player: Player, player2 : Player): Unit = {
       if (x == 10 && y == 10) {
-        val cell = existsPlacedHit(x, y, player)
+        val cell = existsPlacedHit(x, y, player, player2)
         println(cell)
       }
 
       else if (x < 10) {
-      val cell = existsPlacedHit(x, y, player)
+      val cell = existsPlacedHit(x, y, player, player2)
         print(cell)
-        displayGrid2(x + 1, y, player)
+        displayGrid2(x + 1, y, player, player2)
       }
       else {
-        val cell = existsPlacedHit(x, y, player)
+        val cell = existsPlacedHit(x, y, player, player2)
         println(cell)
-        displayGrid2(1, y + 1, player)
+        displayGrid2(1, y + 1, player, player2)
       }
   }
 
 
     /**
-      * checks if there is placed hit on the coordinate
+      * checks if there is a placed hit on the coordinate and if the placed hit actually hit a ship
       * @param x the x coordinate
       * @param y the y coordinate
-      * @param player the player
-      * @return X if there is a placed hit on the coordinates, O otherwise
+      * @param player1 the player that placed the hit
+      * @param player2 the player that is hit
+      * @return H if there is a placed hit on the coordinates, X if this placed hit hit a ship, O otherwise
       */
-    def existsPlacedHit(x: Int, y: Int, player: Player): String = {
-      val hit: List[Point] = player.placedHits.dropWhile(point => point.x != x || point.y != y)
+    def existsPlacedHit(x: Int, y: Int, player1: Player, player2: Player): String = {
+      val hit: List[Point] = player1.placedHits.dropWhile(point => point.x != x || point.y != y)
+      val shipHit: Option[Option[Point]] = player2.ships.map(ship => ship.getHits.find(point => point.x == x && point.y == y)).find(point => point.isDefined)
       if(hit.nonEmpty) {
-        val cell = Console.RED + "X" + Console.RESET
-        cell
+        if(shipHit.isDefined) {
+          val cell = Console.RED + "X" + Console.RESET
+          cell
+        }
+        else {
+          val cell = Console.GREEN + "H" + Console.RESET
+          cell
+        }
       }
       else {
         val cell = "O"

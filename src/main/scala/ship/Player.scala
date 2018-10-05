@@ -98,14 +98,14 @@ object Player {
     * @return true if all the ships are sunk
     */
   def isFinished(ships: List[Ship]): Boolean = {
-    if(ships.exists(ship => !ship.isSunk)) false
+    if(ships.exists(ship => !Ship.isSunk(ship))) false
     else true
   }
 
   /**
     *
     * @param listPosShip the ship's list of positions
-    * @param listPos a list of positions
+    * @param listPos a list of position
     * @return true if none of the ship's positions are occupied, false otherwise
     */
   @tailrec
@@ -116,26 +116,26 @@ object Player {
   }
 
   /**
-    *
+    * checks if one ship of the player is hit
     * @param ships the player's list of ships
     * @param pos the position we want to hit
     * @return true if the position correspond to a ship's position, false otherwise
     */
   @tailrec
-  def oneBoatIsHit(ships: List[Ship], pos: Point): Boolean = {
+  def oneShipIsHit(ships: List[Ship], pos: Point): Boolean = {
     if(ships.isEmpty) false
     else if(Ship.isHit(ships.head, pos)) true
-    else oneBoatIsHit(ships.tail, pos)
+    else oneShipIsHit(ships.tail, pos)
   }
 
   /**
     *
-    * @param ships the player's list of ships
-    * @param pos the position we want to hit
-    * @return true if the position correspond to a ship's position, false otherwise
+    * @param player the player that was hit
+    * @param pos the position he was hit
+    * @return if one of his ship was hit, the player with the list of hits of the ship modified
     */
   def hitShip(player: Player, pos: Point): Player = {
-    if(oneBoatIsHit(player.getShips, pos)) {
+    if(oneShipIsHit(player.getShips, pos)) {
       player.copy(ships = player.ships.map(x => Ship.hitShip(x, pos)))
     }
     else {

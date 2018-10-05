@@ -1,6 +1,5 @@
 package ship
 
-import scala.annotation.tailrec
 
 case class Ship(private val pos: List[Point], private val hits: List[Point], private val typeS: TypeShip) {
 
@@ -22,34 +21,11 @@ case class Ship(private val pos: List[Point], private val hits: List[Point], pri
 
   /**
     *
-    * @return true if the ship is sunk
+    * @return the ship's type
     */
-  def isSunk: Boolean = {
-    pos.length == hits.length
+  def getType: TypeShip = {
+    typeS
   }
-
-
-}
-
-case class TypeShip(name: String, len: Int) {
-
-  /**
-    *
-    * @return the len of the ship
-    */
-  def getLen: Int = {
-    len
-  }
-
-  /**
-    *
-    * @return the name of the ship
-    */
-  def getName: String = {
-    name
-  }
-
-
 }
 
 object Ship {
@@ -115,14 +91,30 @@ object Ship {
     * @return true if the ship is hit
     */
   def isHit(ship: Ship, position: Point): Boolean = {
-    ship.getPos.contains(position)
+    if(ship.getPos.contains(position)) {
+      println("The ship " + ship.getType.getName + " is hit")
+      true
+    }
+    else false
+  }
+
+  /**
+    *
+    * @return true if the ship is sunk
+    */
+  def isSunk(ship: Ship): Boolean = {
+    if(ship.pos.length == ship.hits.length) {
+      println("The ship " + ship.getType.getName + " is sunk")
+      true
+    }
+    else false
   }
 
   /**
     *
     * @param ship a ship
     * @param pos the position the player wants to hit
-    * @return if the ship is hit, a copy of the shit with the new list of positions hit
+    * @return if the ship is hit, a copy of the ship with the new hits list
     */
   def hitShip(ship: Ship, pos:Point): Ship = {
     if(isHit(ship, pos)) {
@@ -130,9 +122,5 @@ object Ship {
     }
     else ship.copy(hits = ship.getHits)
   }
-
-
-
-
 
 }
