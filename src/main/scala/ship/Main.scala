@@ -9,11 +9,15 @@ object Main extends App {
   val grille : Grid = Grid.createRowGrid(1)
   println(player1.getName + " your turn")
   player1 = Player.createFleet(Ship.typeShipList, player1)
-  Grid.displayGrid(grille.getCells, 1, 1, player1)
+  Grid.displayGrid1(1, 1, player1)
+  println("")
+  Grid.displayGrid2(1, 1, player1)
 
   println(player2.getName + " your turn")
   player2 = Player.createFleet(Ship.typeShipList, player2)
-  Grid.displayGrid(grille.getCells, 1, 1, player2)
+  Grid.displayGrid1(1, 1, player2)
+  println(" ")
+  Grid.displayGrid2(1, 1, player2)
 
 
 
