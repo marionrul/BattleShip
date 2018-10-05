@@ -3,7 +3,7 @@ package ship
 object Main extends App {
 
   var player1:Player = Player("Marion", Nil, Nil)
-  var player2 = Player("H", Nil, Nil)
+  var player2 = Player("Achraf", Nil, Nil)
 
   println("The battleship is about to start")
   val grille : Grid = Grid.createRowGrid(1)
@@ -21,17 +21,17 @@ object Main extends App {
 
 
 
-  println("x tir?")
+  /*println("x tir?")
   val xtir = scala.io.StdIn.readLine()
   println("y tir?")
   val ytir = scala.io.StdIn.readLine()
   if(Point.isGood(xtir.toInt, ytir.toInt)) {
     val p = Point(xtir.toInt, ytir.toInt)
-    var tuple = (player2, player1)
-    tuple = Game.hit(player2, player1, p)
-    println("Tirs places", tuple._1.getPlacedHits)
-    tuple._2.ships.foreach(x => println("Cell hits", x.getHits))
-  }
+    var tuple = (player2, player1)*/
+  val winner = Game.hit(player1, player2)
+    /*println("Tirs places", tuple._1.getPlacedHits)
+    tuple._2.ships.foreach(x => println("Cell hits", x.getHits))*/
+  //}
 
 
 

@@ -61,16 +61,16 @@ case class Grid(cells: List[List[String]]) {
       //if(player.placedHits.dropWhile(point => point.x == x && point.y == y).nonEmpty )
       if (x == 10 && y == 10) {
         val cell = existsBoats(x, y, player)
-        println(Console.RED + cell + Console.WHITE)
+        println(cell)
       }
       else if (x < 10) {
         val cell = existsBoats(x, y, player)
-        print(Console.RED + cell + Console.WHITE)
+        print(cell)
         displayGrid1(x + 1, y, player)
       }
       else {
         val cell = existsBoats(x, y, player)
-        println(Console.RED + cell)
+        println(cell)
         displayGrid1(1, y + 1, player)
       }
     }
@@ -87,11 +87,11 @@ case class Grid(cells: List[List[String]]) {
       val ship: Option[Option[Point]] = player.ships.map(ship => ship.getPos.find(point => point.x == x && point.y == y)).find(point => point.isDefined)
       val shipHit: Option[Option[Point]] = player.ships.map(ship => ship.getHits.find(point => point.x == x && point.y == y)).find(point => point.isDefined)
       if (ship.isDefined) {
-        val cell = "S"
+        val cell = Console.GREEN + "S" + Console.RESET
         cell
       }
       else if (shipHit.isDefined) {
-        val cell = "X"
+        val cell = Console.RED + "X" + Console.RESET
         cell
       }
       else {
@@ -108,20 +108,19 @@ case class Grid(cells: List[List[String]]) {
       * @param player the player
       */
     def displayGrid2(x: Int, y: Int, player: Player): Unit = {
-      val point: List[Point] = player.placedHits.dropWhile(point => point.x == x && point.y == y)
       if (x == 10 && y == 10) {
         val cell = existsPlacedHit(x, y, player)
-        println(Console.RED + cell + Console.WHITE)
+        println(cell)
       }
 
       else if (x < 10) {
       val cell = existsPlacedHit(x, y, player)
-        print(Console.RED + cell)
+        print(cell)
         displayGrid2(x + 1, y, player)
       }
       else {
         val cell = existsPlacedHit(x, y, player)
-        println(Console.RED + cell)
+        println(cell)
         displayGrid2(1, y + 1, player)
       }
   }
@@ -135,9 +134,9 @@ case class Grid(cells: List[List[String]]) {
       * @return X if there is a placed hit on the coordinates, O otherwise
       */
     def existsPlacedHit(x: Int, y: Int, player: Player): String = {
-      val hit: List[Point] = player.placedHits.dropWhile(point => point.x == x && point.y == y)
+      val hit: List[Point] = player.placedHits.dropWhile(point => point.x != x || point.y != y)
       if(hit.nonEmpty) {
-        val cell = "X"
+        val cell = Console.RED + "X" + Console.RESET
         cell
       }
       else {

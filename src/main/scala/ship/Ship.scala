@@ -54,15 +54,16 @@ case class TypeShip(name: String, len: Int) {
 
 object Ship {
 
-  val vertical = "vertical"
-  val horizontal = "horizontal"
+  val vertical = "v"
+  val horizontal = "h"
   val carrier: TypeShip = TypeShip("Carrier", 5)
   val battleship: TypeShip = TypeShip("Battleship", 4)
   val submarine: TypeShip = TypeShip("Submarine", 3)
   val cruiser: TypeShip = TypeShip("Cruiser", 3)
   val destroyer: TypeShip = TypeShip("Destroyer", 2)
 
-  val typeShipList: List[TypeShip] = List(Ship.carrier, Ship.battleship, Ship.submarine, Ship.cruiser, Ship.destroyer)
+  val typeShipList: List[TypeShip] = List(Ship.carrier)
+  // Ship.battleship, Ship.submarine, Ship.cruiser, Ship.destroyer)
 
   /**
     *
@@ -78,8 +79,8 @@ object Ship {
     }
     else {
       Point.isGood(x, y) && (dir match {
-        case "horizontal" => Point.isGood(x = x + len - 1, y)
-        case "vertical" => Point.isGood(x, y = y + len - 1)
+        case "h" => Point.isGood(x = x + len - 1, y)
+        case "v" => Point.isGood(x, y = y + len - 1)
         case _ => false
       })
     }
