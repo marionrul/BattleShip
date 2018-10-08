@@ -1,7 +1,8 @@
 package game
 
-import player.Player
+import player.HumanPlayer
 import ship.Point
+import player._
 
 case class Grid()
 

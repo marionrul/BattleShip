@@ -1,5 +1,8 @@
 package ship
 
+import player._
+
+import scala.annotation.tailrec
 
 case class Ship(private val pos: List[Point], private val hits: List[Point], private val typeS: TypeShip) {
 
@@ -86,12 +89,54 @@ object Ship {
 
   /**
     *
+    * @param positions a list of positions
+    * @param pos a position we want to add
+    * @return true if the position is already occupied, false otherwise
+    */
+  def isOccupied(positions: List[Point], pos: Point): Boolean = {
+    if(positions.isEmpty) false
+    else if(positions.contains(pos)) true
+    else false
+  }
+
+  /**
+    *
+    * @param listPosShip the ship's list of positions
+    * @param listPos a list of position
+    * @return true if none of the ship's positions are occupied, false otherwise
+    */
+  @tailrec
+  def areNotOccupied(listPosShip: List[Point], listPos: List[Point]): Boolean = {
+    if(listPos.isEmpty) true
+    else if (isOccupied(listPosShip, listPos.head)) false
+    else areNotOccupied(listPosShip, listPos.tail)
+  }
+
+
+  /**
+    *
     * @param ship a ship
     * @param position the position the player wants to hit
     * @return true if the ship is hit
     */
   def isHit(ship: Ship, position: Point): Boolean = {
     ship.getPos.contains(position)
+  }
+
+  /**
+    * checks if one ship of the player is hit
+    * @param ships the player's list of ships
+    * @param pos the position we want to hit
+    * @return true if the position correspond to a ship's position, false otherwise
+    */
+  @tailrec
+  def oneShipIsHit(ships: List[Ship], pos: Point): Boolean = {
+    if(ships.isEmpty) false
+    else if(isHit(ships.head, pos)) {
+      println("The ship " + ships.head.getType.getName + " is hit")
+      true
+    }
+    else oneShipIsHit(ships.tail, pos)
   }
 
   /*
