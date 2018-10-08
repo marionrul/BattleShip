@@ -1,7 +1,5 @@
 package ship
 
-import player._
-
 import scala.annotation.tailrec
 
 case class Ship(private val pos: List[Point], private val hits: List[Point], private val typeS: TypeShip) {
@@ -41,11 +39,10 @@ object Ship {
   val cruiser: TypeShip = TypeShip("Cruiser", 3)
   val destroyer: TypeShip = TypeShip("Destroyer", 2)
 
-  val typeShipList: List[TypeShip] = List(Ship.carrier)
-  // Ship.battleship, Ship.submarine, Ship.cruiser, Ship.destroyer)
+  val typeShipList: List[TypeShip] = List(Ship.carrier, Ship.battleship, Ship.submarine, Ship.cruiser, Ship.destroyer)
 
   /**
-    *
+    * Checks if we can place a ship on the grid
     * @param dir the direction
     * @param x the x coordinate
     * @param y the y coordinate
@@ -67,7 +64,7 @@ object Ship {
   }
 
   /**
-    *
+    * Creates the list of positions of the ship
     * @param dir the direction of the ship
     * @param x the x coordinate of the ship
     * @param y the y coordinate of the ship
@@ -88,7 +85,7 @@ object Ship {
   }
 
   /**
-    *
+    * Checks if a position is occupied
     * @param positions a list of positions
     * @param pos a position we want to add
     * @return true if the position is already occupied, false otherwise
@@ -100,7 +97,7 @@ object Ship {
   }
 
   /**
-    *
+    * Checks if a list of positions are occupied
     * @param listPosShip the ship's list of positions
     * @param listPos a list of position
     * @return true if none of the ship's positions are occupied, false otherwise
@@ -114,7 +111,7 @@ object Ship {
 
 
   /**
-    *
+    * Checks if a ship is hit
     * @param ship a ship
     * @param position the position the player wants to hit
     * @return true if the ship is hit
@@ -124,10 +121,10 @@ object Ship {
   }
 
   /**
-    * checks if one ship of the player is hit
+    * Checks if one ship of the player is hit
     * @param ships the player's list of ships
     * @param pos the position we want to hit
-    * @return true if the position correspond to a ship's position, false otherwise
+    * @return true if the position corresponds to a ship's position, false otherwise
     */
   @tailrec
   def oneShipIsHit(ships: List[Ship], pos: Point): Boolean = {
@@ -139,9 +136,10 @@ object Ship {
     else oneShipIsHit(ships.tail, pos)
   }
 
-  /*
-    *
-    * @return true if the ship is sunk
+  /**
+    * Checks if a ship is sunk
+    * @param ship a ship
+    * @return true if the ship is shunk, else otherwise
     */
   def isSunk(ship: Ship): Boolean = {
     if(ship.pos.length == ship.hits.length) {
@@ -159,7 +157,7 @@ object Ship {
     */
   def hitShip(ship: Ship, pos:Point): Ship = {
     if(isHit(ship, pos)) {
-     ship.copy(hits = ship.getHits:+pos)
+      ship.copy(hits = ship.getHits:+pos)
     }
     else ship.copy(hits = ship.getHits)
   }

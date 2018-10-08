@@ -1,7 +1,6 @@
 package game
 
-import player.HumanPlayer
-import ship.Point
+import ship._
 import player._
 
 case class Grid()
@@ -41,7 +40,9 @@ case class Grid()
       * @return S if there is a ship on the coordinates, X if there is a hit ship on the coordinates, O otherwise
       */
     def existsBoats(x: Int, y: Int, player: Player): String = {
+      // Find the ships where the positions corresponds to x and y
       val ship: Option[Option[Point]] = player.ships.map(ship => ship.getPos.find(point => point.x == x && point.y == y)).find(point => point.isDefined)
+      // Find the ships where the hit positions corresponds to x and y
       val shipHit: Option[Option[Point]] = player.ships.map(ship => ship.getHits.find(point => point.x == x && point.y == y)).find(point => point.isDefined)
       if (ship.isDefined) {
         if (shipHit.isDefined) {
@@ -95,7 +96,9 @@ case class Grid()
       * @return H if there is a placed hit on the coordinates, X if this placed hit hit a ship, O otherwise
       */
     def existsPlacedHit(x: Int, y: Int, player1: Player, player2: Player): String = {
+      // Find the list of points that where placed on the coordinates
       val hit: List[Point] = player1.placedHits.dropWhile(point => point.x != x || point.y != y)
+      // Find the ships that where hits on the coordinates
       val shipHit: Option[Option[Point]] = player2.ships.map(ship => ship.getHits.find(point => point.x == x && point.y == y)).find(point => point.isDefined)
       if(hit.nonEmpty) {
         if(shipHit.isDefined) {

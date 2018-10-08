@@ -23,7 +23,7 @@ case class Point(x : Int, y : Int) {
 object Point {
 
   /**
-    *
+    * Checks if a point is in the grid
     * @param x the x coordinate
     * @param y the y coordinate
     * @return true if the coordinates x and y are in the grid, false otherwise

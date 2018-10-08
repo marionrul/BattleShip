@@ -5,7 +5,9 @@ import scala.util.Random
 
 
 object Main extends App {
+
 val random = new Random()
+
 val mode = Helper.EntryModeGame()
   mode match {
     case 1 => val name1 = Helper.EntryName("player 1")
@@ -28,17 +30,23 @@ val mode = Helper.EntryModeGame()
     case 5 => val player1 = AIBeginner("AI Beginner", Nil, Nil, Nil)
       val player2 = AIMedium("AI Medium", Nil, Nil, Nil)
       val player3 = AIHard("AI Hard", Nil, Nil, Nil)
-      val score1 = testAI(0, player1, player2, 0, random)
-     val score2 = testAI(0, player1, player3, 0, random)
-      val score3 = testAI(0, player2, player3, 0, random)
+      val score1 = fightAI(0, player1, player2, 0, random)
+     val score2 = fightAI(0, player1, player3, 0, random)
+      val score3 = fightAI(0, player2, player3, 0, random)
       val test: String = "AI Name; score; AI Name2; score2\n" +
-        " AI Level Beginner; " + score1 + "; Level Medium;" + (20-score1) + "\n" +
-        "AI Level Beginner;" + score2 + ";Level Hard;" + (20-score2) + "\n" +
-        "AI Medium;" + score3 + ";Level Hard;" + (20-score3)
+        " AI Level Beginner; " + score1 + "; Level Medium;" + (100-score1) + "\n" +
+        "AI Level Beginner;" + score2 + ";Level Hard;" + (100-score2) + "\n" +
+        "AI Medium;" + score3 + ";Level Hard;" + (100-score3)
       Helper.exportToCSV(test)
   }
 
-
+  /**
+    * Makes the players play
+    * @param player1 the player 1 that plays the game
+    * @param player2 the player 2 that plays the game
+    * @param random the random
+    * @return the winner of the game
+    */
  def play(player1: Player, player2: Player, random: Random) : Player = {
 
   // The players place the ships
@@ -60,8 +68,17 @@ val mode = Helper.EntryModeGame()
 
   }
 
-  def testAI(cpt: Int, player1: Player, player2: Player, nbWinsPlayer1: Int, random: Random): Int = {
-    if(cpt == 20) {
+  /**
+    * Makes the AI fight
+    * @param cpt the number of games they make
+    * @param player1 the first AI that fights
+    * @param player2 the second AI that fights
+    * @param nbWinsPlayer1 the number of wins of the first AI
+    * @param random the random
+    * @return the number of wins of the first AI
+    */
+  def fightAI(cpt: Int, player1: Player, player2: Player, nbWinsPlayer1: Int, random: Random): Int = {
+    if(cpt == 100) {
       print("The player 1 won " + nbWinsPlayer1 + " times")
       nbWinsPlayer1
     }
@@ -73,8 +90,8 @@ val mode = Helper.EntryModeGame()
       }
 
       winner.name match {
-        case player1.name => testAI(cpt+1, player1, player2, nbWinsPlayer1+1, random)
-        case player2.name => testAI(cpt+1, player1, player2, nbWinsPlayer1, random)
+        case player1.name => fightAI(cpt+1, player1, player2, nbWinsPlayer1+1, random)
+        case player2.name => fightAI(cpt+1, player1, player2, nbWinsPlayer1, random)
       }
 
     }

@@ -3,7 +3,7 @@ package game
 import ship._
 import scala.annotation.tailrec
 import scala.util.Random
-import java.io.{BufferedWriter, FileWriter}
+import java.io._
 
 object Helper {
 
@@ -33,11 +33,10 @@ object Helper {
     val pattern = "(^[1-5]$)".r
     x match {
       case pattern(p) => p.toInt
-      case _ => println("Your number must be between 1 and 4")
+      case _ => println("Your number must be between 1 and 5")
         EntryModeGame()
     }
   }
-
 
   /**
     * Gets the player input
@@ -58,7 +57,9 @@ object Helper {
 
   /**
     * Gets the IA input
-    * @return the two coordinates x and y generate randomly
+    * @param randomX the random
+    * @param randomY the random
+    * @return the two coordinates x and y generated randomly
     */
   def EntryParametersAI(randomX: Random, randomY: Random): (Int, Int) = {
     val x = 1 + randomX.nextInt(10)
@@ -84,7 +85,8 @@ object Helper {
 
   /**
     * Gets the IA input
-    * @return the direction generate randomly
+    * @param randomD the random
+    * @return the direction generated randomly
     */
   def EntryDirectionAI(randomD: Random): String = {
     val dir = randomD.nextInt(2)
@@ -94,6 +96,10 @@ object Helper {
     }
   }
 
+  /**
+    * Export the content to a CSV file
+    * @param content the content of the file
+    */
   def exportToCSV(content: String) : Unit = {
     val bufferedWriter = new BufferedWriter(new FileWriter("./ai_proof.csv"))
     bufferedWriter.write(content)

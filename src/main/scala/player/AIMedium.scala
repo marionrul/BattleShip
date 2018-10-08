@@ -1,39 +1,73 @@
 package player
 
-import game.{Grid, Helper}
-import player.AIBeginner.hitShip
-import player.HumanPlayer.hitShip
+import game._
 import ship._
-
 import scala.util.Random
 
 
 case class AIMedium(private val _name: String, private val _ships: List[Ship], private val _placedHits: List[Point], private val _goodHits: List[Point]) extends AI {
 
+  /**
+    * The list of good hits of the player
+    */
   override val goodHits: List[Point] = _goodHits
+
+  /**
+    * The name of the player
+    */
   override val name: String = _name
+
+  /**
+    * The list of ships of the player
+    */
   override val ships: List[Ship] = _ships
+
+  /**
+    * The list of placed hits of the player
+    */
   override val placedHits: List[Point] = _placedHits
 
+  /**
+    * Creates a new player
+    * @param goodHits a new list of goodHits placed
+    * @return a new player with the new lis of goodHits
+    */
   override def copyPlayerGoodHits(goodHits: List[Point]): Player = {
     this.copy( _goodHits = goodHits )
   }
 
+  /**
+    * Creates a new player
+    * @param name a new name
+    * @return a new player with the new name
+    */
   override def copyPlayerName(name: String): Player = {
     this.copy( _name = name )
   }
 
+  /**
+    * Creates a new player
+    * @param ships a new list of ships
+    * @return a new player with the new list of ships
+    */
   override def copyPlayerShips(ships: List[Ship]): Player = {
     this.copy( _ships = ships )
   }
+
+  /**
+    * Creates a new player
+    * @param placedHits a new list of placedHits
+    * @return a new player with the new list of placedHits
+    */
   override def copyPlayerPlacedHits(placedHits: List[Point]): Player = {
     this.copy( _placedHits = placedHits )
   }
 
   /**
-    *
+    * Allows the player to create his fleet
     * @param typeShips the list of ships the player has to place
-    * @param player the player that creates his fleet
+    * @param player the player that creates the fleet
+    * @param random the random
     * @return a new player with his new fleet
     */
   override def createFleet(typeShips: List[TypeShip], player: Player, random: Random): Player = {
@@ -41,62 +75,82 @@ case class AIMedium(private val _name: String, private val _ships: List[Ship], p
       player
     }
     else {
+      // Starts with the first ship
       val firstTypeShip: TypeShip = typeShips.head
-      println( "The ship to place is" + " " + firstTypeShip.getName + " " + "with the length" + " " + firstTypeShip.getLen )
-      println( "Please enter its parameters" )
-      val x = Helper.EntryParametersAI(random, random)._1
-      val y = Helper.EntryParametersAI(random, random)._2
+      // Generates the coordinates and the direction randomly
+      val (x,y) = Helper.EntryParametersAI(random, random)
       val dir = Helper.EntryDirectionAI(random)
+      // if the coordinates are in the grid
       if (Ship.canPlace( dir, x, y, firstTypeShip.len )) {
-        val liste = Ship.createList( dir, x, y, firstTypeShip )
-        val ship = Ship( liste, Nil, firstTypeShip )
-        val newPlayer = player.placeShip( ship )
-        val secondTypeShip = typeShips.tail
-        createFleet( secondTypeShip, newPlayer, random )
+        // Creates the ship's list of positions
+        val listPos = Ship.createList( dir, x, y, firstTypeShip )
+        // Creates the ship
+        val ship = Ship( listPos, Nil, firstTypeShip )
+        // Creates the list of positions of the player ships
+        var shipsPosition = player.ships.flatMap( x => x.getPos )
+        // Creates the list of positions of the ship
+        var points = ship.getPos
+        // if the list of ships of the player is empty
+        if (player.ships.isEmpty) {
+          val secondTypeShip = typeShips.tail
+          // Creates a new player with the new list of ships
+          val newPlayer = player.copyPlayerShips( ships = ship :: Nil )
+          // Creates the fleet with the second ship
+          createFleet(secondTypeShip, newPlayer, random)
+        }
+        // if the list of ships of the player is not empty and that the positions are not occupied
+        else if (Ship.areNotOccupied(shipsPosition, points )) {
+          val secondTypeShip = typeShips.tail
+          // Creates a new player with the new list of ships
+          val newPlayer = player.copyPlayerShips( ships = player.ships :+ ship )
+          // Creates the fleet with the second ship
+          createFleet(secondTypeShip, newPlayer, random)
+        }
+        // if the positions are already occupied
+        else {
+          // Starts again with the first ship
+          createFleet(typeShips, player, random)
+        }
       }
+      // if the coordinates aren't in the grid
       else {
-        println( "The ship is outside the grid, place again" )
+        // Starts again with the first ship
         createFleet( typeShips, player, random )
       }
 
     }
+
   }
 
   /**
-    *
-    * @param pos     the position that the player1 wants to hit
+    * Checks if a hit is good
+    * @param pos the position that is hit
     * @return true if the position is right and if the player didn't hit here before, false otherwise
     */
   def goodHit(pos: Point): Boolean = {
     if (!this.placedHits.contains(pos) && Point.isGood(pos.x, pos.y)) true
-    else {
-      println("You have already made this shot or the coordinate are not good")
-      false
-    }
+    else false
   }
 
   /**
-    * The function that allows the players to play one by one
+    * Allows the players to play one by one
     * @param player2 the player whose ships are hit
+    * @param random the random
     * @return if the hit is good a copy of the player 1 with the new list of placed hits
     */
   override def hit(player2: Player, random: Random): Player = {
     // if the player 1 didn't loose
     if (!this.isFinished(ships )) {
-      println( name + " these are our grids " )
-      // displays the first grid of the player 1
-      Grid.displayGrid1( 1, 1, this )
-      println( " " )
-      // displays the second grid of the player 1
-      Grid.displayGrid2( 1, 1, this, player2 )
-      println(name + " Please enter the shot you want to make" )
-      val (x,y) = Helper.EntryParametersAI(random, random )
-      val pos = Point( x, y )
+      // Generates the shot randomly
+      val (x,y) = Helper.EntryParametersAI(random, random)
+      val pos = Point(x, y)
+      // if the hit is in the grid and if the player didn't hit here before
       if (this.goodHit(pos)) {
-        // if the player2 has one ship hit, changes him
+        // if one shit is hit, changes the player 2 list of ships
         val newPlayer2 = AIMedium.hitShip(player2, pos)
+        // Creates a new player with the new list of placed hits
         val newPlayer1 = this.copyPlayerPlacedHits(placedHits :+ pos)
-        // now is the player2 turn to play
+        // Now is the player 2 turn to play
         newPlayer2.hit(newPlayer1, random)
       }
       else {
@@ -104,8 +158,10 @@ case class AIMedium(private val _name: String, private val _ships: List[Ship], p
         this.hit(player2, random)
       }
     }
+    // if the player looses
     else {
       println( "The player " + player2.name + " won" )
+      // The player 2 wins the game
       player2
     }
   }
@@ -114,10 +170,10 @@ case class AIMedium(private val _name: String, private val _ships: List[Ship], p
 object AIMedium {
 
   /**
-    *
+    * Hits a ship
     * @param player the player that was hit
-    * @param pos    the position he was hit
-    * @return if one of his ship was hit, the player with the list of hits of the ship modified
+    * @param pos the position he was hit on
+    * @return if one of the player's ships is hit, the player with the new list of hits of the ship
     */
   def hitShip(player: Player, pos: Point): Player = {
     if (Ship.oneShipIsHit( player.ships, pos )) {
