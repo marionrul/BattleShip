@@ -1,10 +1,8 @@
 package player
 
 import game._
-import player.AIBeginner.hitShip
 import ship._
 
-import scala.annotation.tailrec
 import scala.util.Random
 
 case class AIBeginner(private val _name: String, private val _ships: List[Ship], private val _placedHits: List[Point], private val _goodHits: List[Point]) extends AI {
@@ -13,6 +11,10 @@ case class AIBeginner(private val _name: String, private val _ships: List[Ship],
   override val ships = _ships
   override val placedHits = _placedHits
   override val goodHits = _goodHits
+
+  override def copyPlayerGoodHits(goodHits: List[Point]): Player = {
+    this.copy( _goodHits = goodHits )
+  }
 
   override def copyPlayerName(name: String): Player = {
     this.copy( _name = name )
@@ -26,21 +28,6 @@ case class AIBeginner(private val _name: String, private val _ships: List[Ship],
     this.copy( _placedHits = placedHits )
   }
 
-  override def placeShip(ship: Ship): Player = {
-    // get all the positions of the player's ships
-    var shipsPosition = ships.map( x => x.getPos ).flatMap( x => x )
-    // get all the positions of the ship
-    var points = ship.getPos
-    if (ships.isEmpty) this.copyPlayerShips( ships = ship :: Nil )
-    // if the ship's positions are not occupied, we can add the ship
-    else if (Ship.areNotOccupied( shipsPosition, points )) {
-      this.copyPlayerShips( ships = ships :+ ship )
-    }
-    else {
-      this.copyPlayerShips( ships = ships )
-    }
-  }
-
 
   /**
     *
@@ -48,7 +35,7 @@ case class AIBeginner(private val _name: String, private val _ships: List[Ship],
     * @param player    the player that creates his fleet
     * @return a new player with his new fleet
     */
-  override def createFleet(typeShips: List[TypeShip], player: Player): Player = {
+  override def createFleet(typeShips: List[TypeShip], player: Player, random: Random): Player = {
     if (typeShips.isEmpty) {
       player
     }
@@ -56,19 +43,19 @@ case class AIBeginner(private val _name: String, private val _ships: List[Ship],
       val firstTypeShip: TypeShip = typeShips.head
       println( "The ship to place is" + " " + firstTypeShip.getName + " " + "with the length" + " " + firstTypeShip.getLen )
       println( "Please enter its parameters" )
-      val x = Helper.EntryParametersAI( new Random(), new Random() )._1
-      val y = Helper.EntryParametersAI( new Random(), new Random() )._2
-      val dir = Helper.EntryDirectionAI( new Random() )
+      val x = Helper.EntryParametersAI(random, random)._1
+      val y = Helper.EntryParametersAI(random, random)._2
+      val dir = Helper.EntryDirectionAI(random)
       if (Ship.canPlace( dir, x, y, firstTypeShip.len )) {
         val liste = Ship.createList( dir, x, y, firstTypeShip )
         val ship = Ship( liste, Nil, firstTypeShip )
         val newPlayer = player.placeShip( ship )
         val secondTypeShip = typeShips.tail
-        createFleet( secondTypeShip, newPlayer )
+        createFleet( secondTypeShip, newPlayer, random )
       }
       else {
         println( "The ship is outside the grid, place again" )
-        createFleet( typeShips, player )
+        createFleet( typeShips, player, random )
       }
 
     }
@@ -76,23 +63,12 @@ case class AIBeginner(private val _name: String, private val _ships: List[Ship],
   }
 
   /**
-    *
-    * @param ships the player's list of ships
-    * @return true if all the ships are sunk
-    */
-  override def isFinished(ships: List[Ship]): Boolean = {
-    if (ships.exists( ship => !Ship.isSunk( ship ) )) false
-    else true
-  }
-
-  /**
     * The function that allows the players to play one by one
     *
-    * @param player1 the player that makes the hit
     * @param player2 the player whose ships are hit
     * @return if the hit is good a copy of the player 1 with the new list of placed hits
     */
-  override def hit(player2: Player): Player = {
+  override def hit(player2: Player, random: Random): Player = {
     // if the player 1 didn't loose
     if (!this.isFinished(ships )) {
       println( name + " these are our grids " )
@@ -102,13 +78,12 @@ case class AIBeginner(private val _name: String, private val _ships: List[Ship],
       // displays the second grid of the player 1
       Grid.displayGrid2( 1, 1, this, player2 )
       println(name + " Please enter the shot you want to make" )
-      val x = Helper.EntryParametersAI( new Random(), new Random() )._1
-      val y = Helper.EntryParametersAI( new Random(), new Random() )._2
+      val (x,y) = Helper.EntryParametersAI(random, random )
       val pos = Point( x, y )
-      val newPlayer2 = hitShip( player2, pos )
+      val newPlayer2 = AIBeginner.hitShip( player2, pos )
       val newPlayer1 = this.copyPlayerPlacedHits( placedHits = placedHits :+ pos )
       // now is the player2 turn to play
-      newPlayer2.hit(newPlayer1)
+      newPlayer2.hit(newPlayer1, random)
     }
     else {
       println( "The player " + player2.name + " won" )

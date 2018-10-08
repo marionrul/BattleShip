@@ -1,9 +1,9 @@
 package game
 
-import ship.Ship
-
+import ship._
 import scala.annotation.tailrec
 import scala.util.Random
+import java.io.{BufferedWriter, FileWriter}
 
 object Helper {
 
@@ -28,8 +28,9 @@ object Helper {
     println("2 - Human vs AI Beginner")
     println("3 - Human vs AI Medium")
     println("4 - Human vs AI Hard")
+    println("5 - Fight of the AI")
     val x = scala.io.StdIn.readLine()
-    val pattern = "(^[1-4]$)".r
+    val pattern = "(^[1-5]$)".r
     x match {
       case pattern(p) => p.toInt
       case _ => println("Your number must be between 1 and 4")
@@ -92,5 +93,13 @@ object Helper {
       case 1 => Ship.vertical
     }
   }
+
+  def exportToCSV(content: String) : Unit = {
+    val bufferedWriter = new BufferedWriter(new FileWriter("./ai_proof.csv"))
+    bufferedWriter.write(content)
+    bufferedWriter.flush()
+    bufferedWriter.close()
+  }
+
 
 }
