@@ -150,7 +150,7 @@ object Ship {
   }
 
   /**
-    *
+    * Hits a ship
     * @param ship a ship
     * @param pos the position the player wants to hit
     * @return if the ship is hit, a copy of the ship with the new hits list
