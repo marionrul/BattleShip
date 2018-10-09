@@ -64,12 +64,12 @@ case class HumanPlayer(private val _name: String, _ships: List[Ship], _placedHit
     else {
       // Starts with the first ship
       val firstTypeShip: TypeShip = typeShips.head
-      println("The ship to place is" + " " + firstTypeShip.getName + " " + "with the length" + " " + firstTypeShip.getLen)
-      println("Please enter its parameters")
+      Output.printShipToPlace(firstTypeShip.getName, firstTypeShip.getLen)
+      Output.chooseParameters()
       // Gets the player inputs
-      val x = Helper.EntryParameters("x")
-      val y = Helper.EntryParameters("y")
-      val dir = Helper.EntryDirection()
+      val x = Input.EntryParameters("x")
+      val y = Input.EntryParameters("y")
+      val dir = Input.EntryDirection()
       // if the coordinates are in the grid
       if(Ship.canPlace(dir, x, y, firstTypeShip.len)) {
         // Creates the ship's list of positions
@@ -99,14 +99,14 @@ case class HumanPlayer(private val _name: String, _ships: List[Ship], _placedHit
         // if the positions are already occupied
         else {
           // Starts again with the first ship
-          println("The position is already occupied, place again")
+          Output.positionOccupied()
           createFleet(typeShips, player, random)
         }
       }
       // if the coordinates aren't in the grid
       else {
         // Starts again with the first ship
-        println("The ship is outside the grid, place again")
+        Output.outsideGrid()
         createFleet(typeShips, player, random)
       }
 
@@ -121,7 +121,7 @@ case class HumanPlayer(private val _name: String, _ships: List[Ship], _placedHit
   def goodHit(pos: Point): Boolean = {
     if (!this.placedHits.contains(pos) && Point.isGood(pos.x, pos.y)) true
     else {
-      println("You have already made this shot or the coordinate are not good")
+     Output.badHit()
       false
     }
   }
@@ -135,15 +135,15 @@ case class HumanPlayer(private val _name: String, _ships: List[Ship], _placedHit
   override def hit(player2: Player, random: Random): Player = {
     // if the player 1 didn't loose
     if(!this.isFinished(this.ships)) {
-      println(this.name + " these are our grids ")
+     Output.printGrid(this.name)
       // displays the first grid of the player 1
-      Grid.displayGrid1(1, 1, this)
+      Grid.displayGrid1(1, 1, this, player2)
       println(" ")
       // displays the second grid of the player 1
       Grid.displayGrid2(1, 1, this, player2)
-      println(this.name + " Please enter the shot you want to make")
-      val x = Helper.EntryParameters("x")
-      val y = Helper.EntryParameters("y")
+      Output.chooseShot(this.name)
+      val x = Input.EntryParameters("x")
+      val y = Input.EntryParameters("y")
       val pos = Point(x, y)
       if (this.goodHit(pos)) {
         // if the player2 has one ship hit, changes him
@@ -159,7 +159,7 @@ case class HumanPlayer(private val _name: String, _ships: List[Ship], _placedHit
       }
     }
     else {
-      println("The player " + player2.name + " won")
+      Output.printWinner(player2.name)
       player2
     }
   }

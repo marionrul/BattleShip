@@ -1,6 +1,7 @@
 package ship
 
 import scala.annotation.tailrec
+import game._
 
 case class Ship(private val pos: List[Point], private val hits: List[Point], private val typeS: TypeShip) {
 
@@ -39,7 +40,7 @@ object Ship {
   val cruiser: TypeShip = TypeShip("Cruiser", 3)
   val destroyer: TypeShip = TypeShip("Destroyer", 2)
 
-  val typeShipList: List[TypeShip] = List(Ship.carrier, Ship.battleship, Ship.submarine, Ship.cruiser, Ship.destroyer)
+  val typeShipList: List[TypeShip] = List(Ship.carrier)// Ship.battleship, Ship.submarine, Ship.cruiser, Ship.destroyer)
 
   /**
     * Checks if we can place a ship on the grid
@@ -130,7 +131,7 @@ object Ship {
   def oneShipIsHit(ships: List[Ship], pos: Point): Boolean = {
     if(ships.isEmpty) false
     else if(isHit(ships.head, pos)) {
-      println("The ship " + ships.head.getType.getName + " is hit")
+      Output.printShipHit(ships.head.getType.getName)
       true
     }
     else oneShipIsHit(ships.tail, pos)
@@ -143,7 +144,7 @@ object Ship {
     */
   def isSunk(ship: Ship): Boolean = {
     if(ship.pos.length == ship.hits.length) {
-      println("The ship " + ship.getType.getName + " is sunk")
+      Output.printShipSunk(ship.getType.getName)
       true
     }
     else false

@@ -8,22 +8,22 @@ object Main extends App {
 
 val random = new Random()
 
-val mode = Helper.EntryModeGame()
+val mode = Input.EntryModeGame()
   mode match {
-    case 1 => val name1 = Helper.EntryName("player 1")
+    case 1 => val name1 = Input.EntryName("player 1")
       val player1 = HumanPlayer(name1, Nil, Nil)
-      val name2 = Helper.EntryName("player 2")
+      val name2 = Input.EntryName("player 2")
       val player2 = HumanPlayer(name2, Nil, Nil)
       play(player1, player2, random)
-    case 2 => val name1 = Helper.EntryName("player")
+    case 2 => val name1 = Input.EntryName("player")
       val player1 = HumanPlayer(name1, Nil, Nil)
       val player2 = AIBeginner("AI Beginner", Nil, Nil, Nil)
       play(player1, player2, random)
-    case 3 => val name1 = Helper.EntryName("player")
+    case 3 => val name1 = Input.EntryName("player")
       val player1 = HumanPlayer(name1, Nil, Nil)
       val player2 = AIMedium("AI Medium", Nil, Nil, Nil)
       play(player1, player2, random)
-    case 4 => val name1 = Helper.EntryName("player")
+    case 4 => val name1 = Input.EntryName("player")
       val player1 = HumanPlayer(name1, Nil, Nil)
       val player2 = AIHard("AI Hard", Nil, Nil, Nil)
       play(player1, player2, random)
@@ -37,7 +37,7 @@ val mode = Helper.EntryModeGame()
         " AI Level Beginner; " + score1 + "; Level Medium;" + (100-score1) + "\n" +
         "AI Level Beginner;" + score2 + ";Level Hard;" + (100-score2) + "\n" +
         "AI Medium;" + score3 + ";Level Hard;" + (100-score3)
-      Helper.exportToCSV(test)
+      Output.exportToCSV(test)
   }
 
   /**
@@ -50,16 +50,16 @@ val mode = Helper.EntryModeGame()
  def play(player1: Player, player2: Player, random: Random) : Player = {
 
   // The players place the ships
-  println("The battleship is about to start")
-  println(player1.name + " your turn")
+  Output.startGame()
+  Output.printTurn(player1.name)
   val newPlayer1 = player1.createFleet(Ship.typeShipList, player1, random)
-  println(newPlayer1.name + " this is the grid with your ships")
-  Grid.displayGrid1(1, 1, newPlayer1)
+  Output.printGridShips(newPlayer1.name)
+  Grid.displayGrid1(1, 1, newPlayer1, player2)
 
-  println(player2.name + " your turn")
+  Output.printTurn(player2.name)
   val newPlayer2 = player2.createFleet(Ship.typeShipList, player2, random)
-  println(newPlayer2.name + " this is the grid with your ships")
-  Grid.displayGrid1(1, 1, newPlayer2)
+   Output.printGridShips(newPlayer2.name)
+  Grid.displayGrid1(1, 1, newPlayer2, newPlayer1)
 
 
   // The players play
@@ -79,7 +79,7 @@ val mode = Helper.EntryModeGame()
     */
   def fightAI(cpt: Int, player1: Player, player2: Player, nbWinsPlayer1: Int, random: Random): Int = {
     if(cpt == 100) {
-      print("The player 1 won " + nbWinsPlayer1 + " times")
+      Output.printNbWins(player1.name, nbWinsPlayer1)
       nbWinsPlayer1
     }
     else {
