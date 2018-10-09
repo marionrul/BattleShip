@@ -1,7 +1,7 @@
 package ship
 
 import scala.annotation.tailrec
-import game._
+import helper._
 
 case class Ship(private val pos: List[Point], private val hits: List[Point], private val typeS: TypeShip) {
 

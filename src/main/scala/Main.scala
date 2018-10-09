@@ -1,6 +1,6 @@
 import player._
 import ship._
-import game._
+import helper._
 import scala.util.Random
 
 

@@ -1,5 +1,5 @@
 package player
-import game._
+import helper._
 import ship._
 
 import scala.util.Random

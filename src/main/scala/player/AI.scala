@@ -1,6 +1,6 @@
 package player
 
-import game.Input
+import helper.Input
 import ship._
 
 import scala.util.Random
