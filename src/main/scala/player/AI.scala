@@ -50,7 +50,7 @@ trait AI extends Player {
         if (player.ships.isEmpty) {
           val secondTypeShip = typeShips.tail
           // Creates a new player with the new list of ships
-          val newPlayer = player.copyPlayerShips( ships = ship :: Nil )
+          val newPlayer = player.copyPlayerShips(ship :: Nil)
           // Creates the fleet with the second ship
           createFleet(secondTypeShip, newPlayer, random)
         }
@@ -58,7 +58,7 @@ trait AI extends Player {
         else if (Ship.areNotOccupied(shipsPosition, points )) {
           val secondTypeShip = typeShips.tail
           // Creates a new player with the new list of ships
-          val newPlayer = player.copyPlayerShips( ships = player.ships :+ ship )
+          val newPlayer = player.copyPlayerShips(player.ships :+ ship)
           // Creates the fleet with the second ship
           createFleet(secondTypeShip, newPlayer, random)
         }

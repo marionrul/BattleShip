@@ -40,7 +40,7 @@ object Ship {
   val cruiser: TypeShip = TypeShip("Cruiser", 3)
   val destroyer: TypeShip = TypeShip("Destroyer", 2)
 
-  val typeShipList: List[TypeShip] = List(Ship.carrier)// Ship.battleship, Ship.submarine, Ship.cruiser, Ship.destroyer)
+  val typeShipList: List[TypeShip] = List(Ship.carrier, Ship.battleship, Ship.submarine, Ship.cruiser, Ship.destroyer)
 
   /**
     * Checks if we can place a ship on the grid

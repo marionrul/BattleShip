@@ -80,7 +80,7 @@ case class AIBeginner(private val _name: String, private val _ships: List[Ship],
       // if one shit is hit, changes the player 2 list of ships
       val newPlayer2 = AIBeginner.hitShip( player2, pos )
       // Creates a new player with the new list of placed hits
-      val newPlayer1 = this.copyPlayerPlacedHits( placedHits = placedHits :+ pos )
+      val newPlayer1 = this.copyPlayerPlacedHits(placedHits :+ pos)
       // Now is the player 2 turn to play
       newPlayer2.hit(newPlayer1, random)
     }
