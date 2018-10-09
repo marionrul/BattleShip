@@ -2,7 +2,6 @@ package player
 
 import helper.Input
 import ship._
-
 import scala.util.Random
 
 trait AI extends Player {

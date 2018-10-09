@@ -43,6 +43,28 @@ class ShipTest extends FlatSpec {
     assert(ship.getPos == ship2.getPos)
   }
 
+  it should "say that the position is occupied" in {
+    assert(Ship.isOccupied(ship.getPos, point2))
+  }
+
+  it should "not say that the position is occupied" in {
+    val point3 = Point(6,5)
+    assert(!Ship.isOccupied(ship.getPos, point3))
+  }
+
+  it should "say that the positions are occupied" in {
+    assert(!Ship.areNotOccupied(ship.getPos, pos))
+  }
+
+
+  it should "not say that the positions are occupied" in {
+    val point3 = Point(6,5)
+    val point4 = Point(8,2)
+    val listPos = List(point3, point4)
+    assert(Ship.areNotOccupied(ship.getPos, listPos))
+  }
+
+
   it should "say that a ship is hit" in {
     assert(Ship.isHit(ship, point1))
     assert(Ship.isHit(ship, point2))
